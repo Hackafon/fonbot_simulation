@@ -1,5 +1,5 @@
 # FONBot Simulation
-Unity simulation for FONBot - assistant robot made at FON
+Unity simulation for FONBot - robot assistant made at FON
 
 ## Setup
 To get started, install Unity Hub and Unity 2020.3.30f1 (make sure that you install that specific version of Unity) on your machine. 
