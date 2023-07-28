@@ -1,18 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraData : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private RawImage _cameraOutputImage;
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        WebCamTexture _webCamTexture = new WebCamTexture();
+        _cameraOutputImage.texture = _webCamTexture;
+        _webCamTexture.Play();
     }
 }

@@ -1,7 +1,5 @@
 using ROS2;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class UltrasonicData : MonoBehaviour
@@ -12,8 +10,8 @@ public class UltrasonicData : MonoBehaviour
     [SerializeField] private List<Transform> _rayOrigins;
 
     private ROS2UnityComponent _ros2Unity;
-    private ROS2Node _ros2Node;
     private IPublisher<std_msgs.msg.Float32> _driverPub;
+    [SerializeField] private Topic _topic;
 
     private void Start()
     {
@@ -28,23 +26,18 @@ public class UltrasonicData : MonoBehaviour
 
     void CastRays()
     {
-        int index = 0;
-        foreach (Transform origin in _rayOrigins)
+        int _index = 0;
+        foreach (Transform _origin in _rayOrigins)
         {
             RaycastHit hit;
-            bool _hitDetect = Physics.Raycast(origin.position, origin.forward, out hit, _maxDistance, _whatToHit);
-            _hitInfo[index] = hit;
+            bool _hitDetect = Physics.Raycast(_origin.position, _origin.forward, out hit, _maxDistance, _whatToHit);
+            _hitInfo[_index] = hit;
+            
+            _index++;
 
-            if (_hitDetect)
+            if (_index >= _rayOrigins.Count)
             {
-                //Debug.Log("Hit: " + _hitInfo[index].collider.name);
-            }
-
-            index++;
-
-            if (index >= _rayOrigins.Count)
-            {
-                index = 0;
+                _index = 0;
             }
         }
     }
@@ -56,24 +49,27 @@ public class UltrasonicData : MonoBehaviour
             return;
         }
 
-        if (_ros2Node == null)
+        if (SensorManager.Instance.ros2Node == null)
         {
-            _ros2Node = _ros2Unity.CreateNode("ROS2UnityTalkerNode");
-            _driverPub = _ros2Node.CreatePublisher<std_msgs.msg.Float32>("ultrasonic_driver");
+            Debug.LogError("ROS2 node not created!");
+            return;
         }
+        
+        _driverPub = SensorManager.Instance.ros2Node.CreatePublisher<std_msgs.msg.Float32>(_topic.topicName);
 
-        float minDist = _maxDistance;
-        foreach (RaycastHit hit in _hitInfo)
+        float _minDist = _maxDistance;
+        foreach (RaycastHit _hit in _hitInfo)
         {
-            if (hit.collider != null && hit.distance < minDist)
+            if (_hit.collider != null && _hit.distance < _minDist)
             {
-                minDist = hit.distance;
+                _minDist = _hit.distance;
             }
         }
 
-        std_msgs.msg.Float32 distance = new std_msgs.msg.Float32();
-        distance.Data = minDist;
-        _driverPub.Publish(distance);
+        std_msgs.msg.Float32 _distance = new std_msgs.msg.Float32();
+        _distance.Data = _minDist;
+        _driverPub.Publish(_distance);
+        Debug.Log($"Published to topic {_topic.topicName}: {_distance.Data}");
     }
 
     private void Update()
@@ -84,27 +80,27 @@ public class UltrasonicData : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        int index = 0;
-        foreach (Transform origin in _rayOrigins)
+        int _index = 0;
+        foreach (Transform _origin in _rayOrigins)
         {
             Gizmos.color = Color.red;
-            if (origin != null)
+            if (_origin != null)
             {
-                Gizmos.DrawRay(origin.position, origin.forward * _maxDistance);
+                Gizmos.DrawRay(_origin.position, _origin.forward * _maxDistance);
             }
 
             Gizmos.color = Color.green;
 
-            if (_hitInfo != null && _hitInfo[index].collider != null)
+            if (_hitInfo != null && _hitInfo[_index].collider != null)
             {
-                Gizmos.DrawRay(origin.position, origin.forward * _hitInfo[index].distance);
+                Gizmos.DrawRay(_origin.position, _origin.forward * _hitInfo[_index].distance);
             }
 
-            index++;
+            _index++;
 
-            if (index >= _rayOrigins.Count)
+            if (_index >= _rayOrigins.Count)
             {
-                index = 0;
+                _index = 0;
             }
         }
     }

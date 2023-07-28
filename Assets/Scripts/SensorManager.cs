@@ -1,18 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using ROS2;
 using UnityEngine;
 
 public class SensorManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public static SensorManager Instance { get; private set; }
+    public ROS2Node ros2Node;
+    
+    private void Awake()
     {
+        if (Instance != null && Instance != this) 
+        { 
+            Destroy(this); 
+        } 
+        else 
+        { 
+            Instance = this; 
+        } 
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        var _ros2Unity = GameObject.FindGameObjectWithTag("ROS2Manager").GetComponent<ROS2UnityComponent>();
+        ros2Node = _ros2Unity.CreateNode("UnityFonbot");
     }
 }
