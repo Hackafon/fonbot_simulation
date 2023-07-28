@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - robot
+  - ROS2Manager
   layers:
   - Default
   - TransparentFX
@@ -12,8 +13,8 @@ TagManager:
   - PostProcessing
   - Water
   - UI
-  - 
-  - 
+  - Ultrasonic
+  - Robot
   - 
   - 
   - 
