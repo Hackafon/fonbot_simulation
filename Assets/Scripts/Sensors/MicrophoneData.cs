@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using ROS2;
 using std_msgs.msg;
 using UnityEngine;
@@ -13,7 +10,7 @@ namespace Fonbot.Sensors
         private int _lastPosition = 0;
 
         private ROS2UnityComponent _ros2Unity;
-        private IPublisher<std_msgs.msg.Float32MultiArray> _driverPub;
+        private IPublisher<Float32MultiArray> _driverPub;
         [SerializeField] private Topic _topic;
 
         void Start()
@@ -81,7 +78,7 @@ namespace Fonbot.Sensors
             _driverPub =
                 SensorManager.Instance.ros2Node.CreatePublisher<std_msgs.msg.Float32MultiArray>(_topic.topicName);
 
-            std_msgs.msg.Float32MultiArray _samples = new Float32MultiArray();
+            Float32MultiArray _samples = new Float32MultiArray();
             float[] _micData = GetMicData();
 
             //our float array will have following form: [frequency, number of channels, samples length, samples data...]

@@ -7,8 +7,7 @@ namespace Fonbot.Sensors
     public class UltrasonicData : MonoBehaviour, ISensorData
     {
         private List<RaycastHit> _hitInfo;
-        [SerializeField] private float _maxDistance;
-        [SerializeField] private LayerMask _whatToHit;
+        [SerializeField] private UltrasonicOptions _options;
         [SerializeField] private List<Transform> _rayOrigins;
 
         private ROS2UnityComponent _ros2Unity;
@@ -31,8 +30,7 @@ namespace Fonbot.Sensors
             int _index = 0;
             foreach (Transform _origin in _rayOrigins)
             {
-                RaycastHit hit;
-                bool _hitDetect = Physics.Raycast(_origin.position, _origin.forward, out hit, _maxDistance, _whatToHit);
+                bool _hitDetect = Physics.Raycast(_origin.position, _origin.forward, out var hit, _options.MaxDistance, _options.WhatToHit);
                 _hitInfo[_index] = hit;
 
                 _index++;
@@ -59,7 +57,7 @@ namespace Fonbot.Sensors
 
             _driverPub = SensorManager.Instance.ros2Node.CreatePublisher<std_msgs.msg.Float32>(_topic.topicName);
 
-            float _minDist = _maxDistance;
+            float _minDist = _options.MaxDistance;
             foreach (RaycastHit _hit in _hitInfo)
             {
                 if (_hit.collider != null && _hit.distance < _minDist)
@@ -88,7 +86,7 @@ namespace Fonbot.Sensors
                 Gizmos.color = Color.red;
                 if (_origin != null)
                 {
-                    Gizmos.DrawRay(_origin.position, _origin.forward * _maxDistance);
+                    Gizmos.DrawRay(_origin.position, _origin.forward * _options.MaxDistance);
                 }
 
                 Gizmos.color = Color.green;
