@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISensorData
+namespace Fonbot.Sensors
 {
-    void PublishToTopic();
+    public interface ISensorData
+    {
+        void PublishToTopic();
+    }
 }
