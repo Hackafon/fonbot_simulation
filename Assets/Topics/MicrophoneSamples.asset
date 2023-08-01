@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4b033e5d530cd3440b4b45d56757d367, type: 3}
-  m_Name: Microphone
+  m_Name: MicrophoneSamples
   m_EditorClassIdentifier: 
   topicName: microphone_driver

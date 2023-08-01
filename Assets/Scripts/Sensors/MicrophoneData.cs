@@ -1,21 +1,34 @@
+using System.Linq;
+using Fonbot.Common;
 using ROS2;
 using std_msgs.msg;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Fonbot.Sensors
 {
     public class MicrophoneData : MonoBehaviour, ISensorData
     {
+        [SerializeField] private AudioSource _audioSource;
         private AudioClip _micClip;
         private int _lastPosition = 0;
+        private float[] _data;
+        private float[] _spectrumData;
 
         private ROS2UnityComponent _ros2Unity;
-        private IPublisher<Float32MultiArray> _driverPub;
-        [SerializeField] private Topic _topic;
+        private IPublisher<Float32MultiArray> _samplesDriverPub;
+        private IPublisher<Float32> _spectrumDriverPub;
+
+        [FormerlySerializedAs("_topic")] [SerializeField] private Topic _samplesTopic;
+        [SerializeField] private Topic _spectrumTopic;
 
         void Start()
         {
+            Application.RequestUserAuthorization(UserAuthorization.Microphone);
             _micClip = Microphone.Start(null, true, 10, 44100);
+            _data = new float[_micClip.samples * _micClip.channels];
+            _spectrumData = new float[64];
+            _audioSource.clip = _micClip;
 
             _ros2Unity = GameObject.FindGameObjectWithTag("ROS2Manager").GetComponent<ROS2UnityComponent>();
         }
@@ -24,10 +37,21 @@ namespace Fonbot.Sensors
         {
             PublishToTopic();
         }
+        
+        public float GetSpectrumData()
+        {
+            _audioSource.GetSpectrumData(_spectrumData, 0, FFTWindow.BlackmanHarris);
+            float _avgSample = 0;
+            foreach (var sample in _spectrumData)
+            {
+                _avgSample += sample;
+            }
+
+            return _avgSample / _spectrumData.Length;
+        }
 
         float[] GetMicData()
         {
-            float[] _data = new float[_micClip.samples * _micClip.channels];
             var _currentPosition = Microphone.GetPosition(null);
             _micClip.GetData(_data, 0);
 
@@ -75,8 +99,8 @@ namespace Fonbot.Sensors
                 return;
             }
 
-            _driverPub =
-                SensorManager.Instance.ros2Node.CreatePublisher<std_msgs.msg.Float32MultiArray>(_topic.topicName);
+            _samplesDriverPub =
+                SensorManager.Instance.ros2Node.CreatePublisher<Float32MultiArray>(_samplesTopic.topicName);
 
             Float32MultiArray _samples = new Float32MultiArray();
             float[] _micData = GetMicData();
@@ -91,8 +115,16 @@ namespace Fonbot.Sensors
                 _samples.Data[i] = _micData[i - 3];
             }
 
-            _driverPub.Publish(_samples);
-            Debug.Log($"Published to topic {_topic.topicName}");
+            _samplesDriverPub.Publish(_samples);
+            Debug.Log($"Published to topic {_samplesTopic.topicName}");
+
+            _spectrumDriverPub = SensorManager.Instance.ros2Node.CreatePublisher<Float32>(_spectrumTopic.topicName);
+            Float32 _spectrumAvg = new Float32();    
+            _spectrumAvg.Data = GetSpectrumData();
+            _spectrumDriverPub.Publish(_spectrumAvg);
+            Debug.Log($"Published to topic {_spectrumTopic.topicName}");
         }
+
+        
     }
 }

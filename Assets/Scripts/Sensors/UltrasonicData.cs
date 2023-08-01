@@ -1,5 +1,6 @@
 using ROS2;
 using System.Collections.Generic;
+using Fonbot.Common;
 using UnityEngine;
 
 namespace Fonbot.Sensors
