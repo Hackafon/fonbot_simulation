@@ -23,7 +23,7 @@ namespace Fonbot.Sensors
             }
 
             var _ros2Unity = GameObject.FindGameObjectWithTag("ROS2Manager").GetComponent<ROS2UnityComponent>();
-            ros2Node = _ros2Unity.CreateNode("UnityFonbot");
+            ros2Node = _ros2Unity.CreateNode("UnitySensors");
         }
     }
 }
