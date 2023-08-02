@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7978169707387943944}
   - component: {fileID: 2700663093346504294}
   - component: {fileID: 2195335482222059495}
+  - component: {fileID: 1023916993}
   m_Layer: 5
   m_Name: CommandOutput
   m_TagString: Untagged
@@ -26,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1510390720106198350}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -66,7 +67,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'input: Command not found'
+  m_text: output
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38b83e2df39d2cf4abbf96494735622f, type: 2}
   m_sharedMaterial: {fileID: -4163905179588852548, guid: 38b83e2df39d2cf4abbf96494735622f, type: 2}
@@ -97,8 +98,8 @@ MonoBehaviour:
   m_fontSizeBase: 50.1
   m_fontWeight: 400
   m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMin: 50.1
+  m_fontSizeMax: 500
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -154,4 +155,18 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: 1
-  m_LayoutPriority: 1
+  m_LayoutPriority: 101
+--- !u!114 &1023916993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1510390720106198350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 0
+  m_VerticalFit: 2

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74286a3ebabb4514a95c361bc3af8689, type: 3}
   m_Name: Clear
   m_EditorClassIdentifier: 
-  _commandName: 
-  _commandDescription: 
-  _commandAction: {fileID: 0}
+  _commandName: clear
+  _commandDescription: clears the terminal
+  _commandAction: {fileID: -258287768692057659, guid: 679ab1b2313c40d4ab8d80ff6388432f, type: 3}

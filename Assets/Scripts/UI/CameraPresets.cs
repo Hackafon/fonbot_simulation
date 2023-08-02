@@ -20,15 +20,20 @@ namespace Fonbot.UI
         private void Start()
         {
             _currentPreset = _defaultPreset;
-            TweenCamera();
+            TweenToCurrentPreset();
         }
 
-        private void TweenCamera()
+        public void TweenCamera(Vector3 position, Vector3 rotation)
         {
             _presetText.SetText((_currentPreset + 1).ToString());
 
-            _mainCam.transform.DOMove(_cameraPositionPresets[_currentPreset], 1f).SetEase(Ease.InOutSine);
-            _mainCam.transform.DORotate(_cameraRotationPresets[_currentPreset], 1f).SetEase(Ease.InOutSine);
+            _mainCam.transform.DOMove(position, 1f).SetEase(Ease.InOutSine);
+            _mainCam.transform.DORotate(rotation, 1f).SetEase(Ease.InOutSine);
+        }
+
+        public void TweenToCurrentPreset()
+        {
+            TweenCamera(_cameraPositionPresets[_currentPreset], _cameraRotationPresets[_currentPreset]);
         }
 
         public void NextPreset()
@@ -38,7 +43,7 @@ namespace Fonbot.UI
             else
                 _currentPreset = 0;
 
-            TweenCamera();
+            TweenToCurrentPreset();
         }
     }
 }

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74286a3ebabb4514a95c361bc3af8689, type: 3}
   m_Name: Topics
   m_EditorClassIdentifier: 
-  _commandName: 
-  _commandDescription: 
-  _commandAction: {fileID: 0}
+  _commandName: topics
+  _commandDescription: lists all ROS2 topics
+  _commandAction: {fileID: -4645198136954422784, guid: aa58450337b56dc4e847fcc88a8f717f, type: 3}

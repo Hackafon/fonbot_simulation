@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fonbot.Commands;
 using UnityEngine;
 
-public class Exit : MonoBehaviour
+namespace Fonbot.Commands
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Exit : BaseCommand
     {
-        
-    }
+        public override string Execute()
+        {
+            Terminal _terminal = GameObject.FindGameObjectWithTag("terminal").GetComponent<Terminal>();
+            _terminal.ExitTerminal();
+            return "exiting...";
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void ProcessArguments(string cmd)
+        {
+        }
     }
 }

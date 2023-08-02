@@ -6,6 +6,7 @@ TagManager:
   tags:
   - robot
   - ROS2Manager
+  - terminal
   layers:
   - Default
   - TransparentFX

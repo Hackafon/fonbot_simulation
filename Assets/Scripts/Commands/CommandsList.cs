@@ -1,18 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Fonbot.Commands;
 using UnityEngine;
 
-public class CommandsList : MonoBehaviour
+namespace Fonbot.Commands
 {
-    // Start is called before the first frame update
-    void Start()
+    [CreateAssetMenu(fileName = "CommandsList", menuName = "Fonbot/CommandsList")]
+    public class CommandsList : ScriptableObject
     {
-        
-    }
+        [SerializeField] private List<CommandInfo> _commandsList;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public List<CommandInfo> Commands => _commandsList;
     }
 }

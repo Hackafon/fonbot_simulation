@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Clear : MonoBehaviour
+namespace Fonbot.Commands
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Clear : BaseCommand
     {
-        
-    }
+        public override string Execute()
+        {
+            Terminal _terminal = GameObject.FindGameObjectWithTag("terminal").GetComponent<Terminal>();
+            _terminal.ClearTerminal();
+            return "clearing...";
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void ProcessArguments(string cmd)
+        {
+        }
     }
 }

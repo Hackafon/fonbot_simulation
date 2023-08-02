@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using TMPro;
 using UnityEngine;
 
-public class Help : MonoBehaviour
+namespace Fonbot.Commands
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Help : BaseCommand
     {
-        
-    }
+        [SerializeField] private CommandsList _commands;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override string Execute()
+        {
+            StringBuilder _stringBuilder = new StringBuilder();
+            foreach (var cmd in _commands.Commands)
+            {
+                _stringBuilder.Append($"{cmd.CommandName}: {cmd.CommandDescription}\n");
+            }
+
+            return _stringBuilder.ToString();
+        }
+
+        public override void ProcessArguments(string cmd)
+        {
+        }
     }
 }

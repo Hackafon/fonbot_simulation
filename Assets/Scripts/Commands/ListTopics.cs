@@ -1,18 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
+using Fonbot.Commands;
+using Fonbot.Common;
 using UnityEngine;
 
-public class ListTopics : MonoBehaviour
+namespace Fonbot.Commands
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ListTopics : BaseCommand
     {
-        
-    }
+        [SerializeField] private Topic[] _topics;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override string Execute()
+        {
+            StringBuilder _stringBuilder = new StringBuilder();
+            foreach (var _topic in _topics)
+            {
+                _stringBuilder.Append($"/{_topic.topicName}\n");
+            }
+
+            return _stringBuilder.ToString();
+        }
+
+        public override void ProcessArguments(string cmd)
+        {
+        }
     }
 }

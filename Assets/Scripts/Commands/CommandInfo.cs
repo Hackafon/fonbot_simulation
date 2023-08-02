@@ -7,7 +7,7 @@ using UnityEngine.Events;
 namespace Fonbot.Commands
 {
     [CreateAssetMenu(fileName = "Command", menuName = "Fonbot/Command")]
-    public class Command : ScriptableObject
+    public class CommandInfo : ScriptableObject
     {
         [SerializeField] private string _commandName;
         [SerializeField] private string _commandDescription;
