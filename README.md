@@ -6,7 +6,7 @@ To get started, install Unity Hub and Unity 2020.3.30f1 (make sure that you inst
 Once you have Unity installed, clone the repository.<br>
 
 ## Unity <-> ROS2 integration
-For us to be able to integrate our Unity simulation with ROS2, we are using [ROS2 To Unity](https://github.com/RobotecAI/ros2-for-unity) package.
+For us to be able to integrate our Unity simulation with ROS2, we are using [ROS2 for Unity](https://github.com/RobotecAI/ros2-for-unity) package.
 
 ## Opening Unity project
 From your ROS2 terminal type the following command:
